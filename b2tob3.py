@@ -32,6 +32,7 @@ regexes = [
     (re.compile(class_decl + r'\bbtn-mini\b'), '\\1btn-xs'),
     (re.compile(class_decl + r'\bthumbnail\b'), '\\1img-thumbnail'),
     (re.compile(class_decl + r'\bunstyled\b'), '\\1list-unstyled')
+    (re.compile(class_decl + r'\binline\b'), '\\1list-inline')
 ]
 
 if __name__ == '__main__':
