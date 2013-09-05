@@ -14,7 +14,7 @@ from optparse import OptionParser
 # Does not include all changes from:
 # http://getbootstrap.com/getting-started/#migration
 
-class_decl = r'(class\s*=\s*["'][\w\s]*)'
+class_decl = r'(class\s*=\s*["\'][\w\s]*)'
 
 regexes = [
     (re.compile(class_decl + r'\bspan(\d+)\b'), '\\1col-md-\\2'),
@@ -31,7 +31,7 @@ regexes = [
     (re.compile(class_decl + r'\bbtn-navbar\b'), '\\1navbar-btn'),
     (re.compile(class_decl + r'\bbtn-mini\b'), '\\1btn-xs'),
     (re.compile(class_decl + r'\bthumbnail\b'), '\\1img-thumbnail'),
-    (re.compile(class_decl + r'\bunstyled\b'), '\\1list-unstyled')
+    (re.compile(class_decl + r'\bunstyled\b'), '\\1list-unstyled'),
     (re.compile(class_decl + r'\binline\b'), '\\1list-inline')
 ]
 
