@@ -17,21 +17,21 @@ from optparse import OptionParser
 class_decl = r'(class\s*=\s*"[\w\s]*)'
 
 regexes = [
-    (re.compile(class_decl + r'\bspan(\d+)\b'), 'col-md-\\1'),
-    (re.compile(class_decl + r'\boffset(\d+)\b'), 'col-offset-\\1'),
-    (re.compile(class_decl + r'\bicon-(\w+)\b'), '.glyphicon .glyphicon-\\1'),
-    (re.compile(class_decl + r'\bhero\-unit\b'), 'jumbotron'),
+    (re.compile(class_decl + r'\bspan(\d+)\b'), '\\1col-md-\\2'),
+    (re.compile(class_decl + r'\boffset(\d+)\b'), '\\1col-offset-\\2'),
+    (re.compile(class_decl + r'\bicon-(\w+)\b'), '\\1.glyphicon .glyphicon-\\2'),
+    (re.compile(class_decl + r'\bhero\-unit\b'), '\\1jumbotron'),
 
-    (re.compile(class_decl + r'\b(container|row)-fluid\b'), '\\1'),
-    (re.compile(class_decl + r'\bnav\-(collapse|toggle)\b'), 'navbar-\\1'),
+    (re.compile(class_decl + r'\b(container|row)-fluid\b'), '\\1\\2'),
+    (re.compile(class_decl + r'\bnav\-(collapse|toggle)\b'), '\\1navbar-\\2'),
 
-    (re.compile(class_decl + r'\b(input|btn)-small\b'), '\\1-sm'),
-    (re.compile(class_decl + r'\b(input|btn)-large\b'), '\\1-lg'),
+    (re.compile(class_decl + r'\b(input|btn)-small\b'), '\\1\\2-sm'),
+    (re.compile(class_decl + r'\b(input|btn)-large\b'), '\\1\\2-lg'),
 
-    (re.compile(class_decl + r'\bbtn-navbar\b'), 'navbar-btn'),
-    (re.compile(class_decl + r'\bbtn-mini\b'), 'btn-xs'),
-    (re.compile(class_decl + r'\bthumbnail\b'), 'img-thumbnail'),
-    (re.compile(class_decl + r'\bunstyled\b'), 'list-unstyled')
+    (re.compile(class_decl + r'\bbtn-navbar\b'), '\\1navbar-btn'),
+    (re.compile(class_decl + r'\bbtn-mini\b'), '\\1btn-xs'),
+    (re.compile(class_decl + r'\bthumbnail\b'), '\\1img-thumbnail'),
+    (re.compile(class_decl + r'\bunstyled\b'), '\\1list-unstyled')
 ]
 
 if __name__ == '__main__':
