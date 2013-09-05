@@ -14,7 +14,7 @@ from optparse import OptionParser
 # Does not include all changes from:
 # http://getbootstrap.com/getting-started/#migration
 
-class_decl = r'(class\s*=\s*"[\w\s]*)'
+class_decl = r'(class\s*=\s*["'][\w\s]*)'
 
 regexes = [
     (re.compile(class_decl + r'\bspan(\d+)\b'), '\\1col-md-\\2'),
