@@ -19,7 +19,7 @@ class_decl = r'(class\s*=\s*["\'][\w\s]*)'
 regexes = [
     (re.compile(class_decl + r'\bspan(\d+)\b'), '\\1col-md-\\2'),
     (re.compile(class_decl + r'\boffset(\d+)\b'), '\\1col-offset-\\2'),
-    (re.compile(class_decl + r'\bicon-(\w+)\b'), '\\1.glyphicon .glyphicon-\\2'),
+    (re.compile(class_decl + r'\bicon-(\w+)\b'), '\\1glyphicon glyphicon-\\2'),
     (re.compile(class_decl + r'\bhero\-unit\b'), '\\1jumbotron'),
 
     (re.compile(class_decl + r'\b(container|row)-fluid\b'), '\\1\\2'),
@@ -34,6 +34,7 @@ regexes = [
     (re.compile(class_decl + r'\bunstyled\b'), '\\1list-unstyled'),
     (re.compile(class_decl + r'\binline\b'), '\\1list-inline')
 ]
+
 
 if __name__ == '__main__':
     parser = OptionParser()
