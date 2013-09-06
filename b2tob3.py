@@ -18,7 +18,7 @@ class_decl = r'(class\s*=\s*["\'][\w\s]*)'
 
 regexes = [
     (re.compile(class_decl + r'\bspan(\d+)\b'), '\\1col-md-\\2'),
-    (re.compile(class_decl + r'\boffset(\d+)\b'), '\\1col-offset-\\2'),
+    (re.compile(class_decl + r'\boffset(\d+)\b'), '\\1col-md-offset-\\2'),
     (re.compile(class_decl + r'\bicon-(\w+)\b'), '\\1glyphicon glyphicon-\\2'),
     (re.compile(class_decl + r'\bhero\-unit\b'), '\\1jumbotron'),
 
