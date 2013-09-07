@@ -49,6 +49,11 @@ def main():
         help="Extension of files to parse", metavar="EXT", default="html"
     )
 
+    parser.add_option(
+        '-v', '--verbose', action='store_true', dest='verbose',
+        help='Be verbose and print names of changed files.'
+    )
+
     (options, args) = parser.parse_args()
 
     pwd = os.path.abspath(options.pwd)
@@ -59,22 +64,28 @@ def main():
 
     for root, dirs, files in os.walk(pwd):
         for f in files:
-            if f.endswith('.' + options.ext):
-                count_files += 1
-                fname = os.path.join(root, f)
-                with open(fname, 'r') as curr_file:
-                    content = curr_file.read()
-                with open(fname, 'w') as curr_file:
-                    count_file_subs = 0
-                    for regex in regexes:
-                        (content, count) = re.subn(regex[0], regex[1], content)
-                        count_file_subs += count
-                    curr_file.write(content)
-                    if count_file_subs > 0:
-                        count_subs += count_file_subs
-                        count_files_changed += 1
+            if not f.endswith('.' + options.ext):
+                continue
 
-    tpl = 'Replacements: % 6d\nFiles changed: % 5d\nFiles processed: %d\n'
+            count_files += 1
+            count_file_subs = 0
+
+            fname = os.path.join(root, f)
+            with open(fname, 'r') as curr_file:
+                content = curr_file.read()
+            with open(fname, 'w') as curr_file:
+                for regex in regexes:
+                    (content, count) = re.subn(regex[0], regex[1], content)
+                    count_file_subs += count
+                curr_file.write(content)
+
+            if count_file_subs > 0:
+                count_subs += count_file_subs
+                count_files_changed += 1
+                if options.verbose:
+                    print('File changed: %s' % fname)
+
+    tpl = 'Replacements:    %d\nFiles changed:   %d\nFiles processed: %d\n'
     print(tpl % (count_subs, count_files_changed, count_files))
 
 if __name__ == '__main__':

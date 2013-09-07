@@ -2,6 +2,8 @@
 # coding: utf-8
 from setuptools import setup, find_packages
 
+from b2tob3 import VERSION
+
 with open('README.rst') as f:
     README = f.read()
 
@@ -10,7 +12,7 @@ with open('LICENSE') as f:
 
 setup(
     name='b2tob3',
-    version='0.2',
+    version=VERSION,
     packages=find_packages(),
     long_description=README,
     license=LICENSE,
