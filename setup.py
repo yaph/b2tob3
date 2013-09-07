@@ -10,7 +10,7 @@ with open('LICENSE') as f:
 
 setup(
     name='b2tob3',
-    version='0.1',
+    version='0.2',
     packages=find_packages(),
     long_description=README,
     license=LICENSE,

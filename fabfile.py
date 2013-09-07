@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from fabric.api import local, lcd
+from fabric.api import local
 
 
 def build_docs():
