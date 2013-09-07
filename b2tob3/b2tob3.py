@@ -53,17 +53,29 @@ def main():
 
     pwd = os.path.abspath(options.pwd)
 
+    count_subs = 0
+    count_files = 0
+    count_files_changed = 0
+
     for root, dirs, files in os.walk(pwd):
         for f in files:
             if f.endswith('.' + options.ext):
+                count_files += 1
                 fname = os.path.join(root, f)
                 with open(fname, 'r') as curr_file:
                     content = curr_file.read()
                 with open(fname, 'w') as curr_file:
+                    count_file_subs = 0
                     for regex in regexes:
-                        content = re.sub(regex[0], regex[1], content)
+                        (content, count) = re.subn(regex[0], regex[1], content)
+                        count_file_subs += count
                     curr_file.write(content)
+                    if count_file_subs > 0:
+                        count_subs += count_file_subs
+                        count_files_changed += 1
 
+    tpl = 'Replacements: % 6d\nFiles changed: % 5d\nFiles processed: %d\n'
+    print(tpl % (count_subs, count_files_changed, count_files))
 
 if __name__ == '__main__':
     main()

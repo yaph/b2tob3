@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from fabric.api import local
+from fabric.api import local, lcd
 
 
 def build_docs():
@@ -18,3 +18,8 @@ def release():
 def git():
     local('git add . && git commit -a')
     local('git push')
+
+
+def test():
+    local('cp -R tests t')
+    local('python b2tob3/b2tob3.py -d t')
