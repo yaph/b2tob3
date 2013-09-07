@@ -11,13 +11,14 @@ automate migration, you'll most likely need to perform manual fixes too.
 Installation
 ------------
 
+::
     pip install b2tob3
 
 Usage
 -----
 
+::
     cd /project/html/
-
     b2tob3
 
 Follow these steps to avoid frustration:
