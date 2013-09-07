@@ -10,7 +10,7 @@ import os
 import re
 from optparse import OptionParser
 
-# List of regular expression replacements tubles to be executed in order.
+# List of regular expression replacements tuples to be executed in order.
 # Does not include all changes from:
 # http://getbootstrap.com/getting-started/#migration
 
@@ -36,7 +36,7 @@ regexes = [
 ]
 
 
-if __name__ == '__main__':
+def main():
     parser = OptionParser()
 
     parser.add_option(
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     for root, dirs, files in os.walk(pwd):
         for f in files:
-            if f.endswith("."+options.ext):
+            if f.endswith('.' + options.ext):
                 fname = os.path.join(root, f)
                 with open(fname, 'r') as curr_file:
                     content = curr_file.read()
@@ -63,3 +63,7 @@ if __name__ == '__main__':
                     for regex in regexes:
                         content = re.sub(regex[0], regex[1], content)
                     curr_file.write(content)
+
+
+if __name__ == '__main__':
+    main()
