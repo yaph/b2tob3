@@ -42,8 +42,8 @@ Follow these steps to avoid frustration:
 Contributing
 ------------
 
-* Let me know about bugs by posting an issue.
-* Help reduce the manual work by improving the code.
+* Let me know about bugs by posting `an issue <https://github.com/yaph/b2tob3/issues>`_.
+* Help reduce the manual work by improving `the code <https://github.com/yaph/b2tob3>`_.
 * Write tests.
 
 Contributors
