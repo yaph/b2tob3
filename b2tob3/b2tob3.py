@@ -73,17 +73,22 @@ def main():
             fname = os.path.join(root, f)
             with open(fname, 'r') as curr_file:
                 content = curr_file.read()
-            with open(fname, 'w') as curr_file:
-                for regex in regexes:
-                    (content, count) = re.subn(regex[0], regex[1], content)
-                    count_file_subs += count
-                curr_file.write(content)
 
-            if count_file_subs > 0:
-                count_subs += count_file_subs
-                count_files_changed += 1
-                if options.verbose:
-                    print('File changed: %s' % fname)
+            # perform replacements in file content
+            for regex in regexes:
+                (content, count) = re.subn(regex[0], regex[1], content)
+                count_file_subs += count
+
+            if count_file_subs == 0:
+                continue
+
+            with open(fname, 'w') as curr_file:
+                curr_file.write(content)
+            if options.verbose:
+                print('File changed: %s' % fname)
+
+            count_subs += count_file_subs
+            count_files_changed += 1
 
     tpl = 'Replacements:    %d\nFiles changed:   %d\nFiles processed: %d\n'
     print(tpl % (count_subs, count_files_changed, count_files))
