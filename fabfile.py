@@ -12,6 +12,7 @@ def docs():
 
 
 def release():
+    local('nosetests')
     local('python setup.py sdist upload')
 
 
