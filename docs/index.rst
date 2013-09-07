@@ -1,6 +1,11 @@
 b2tob3
 ======
 
+.. image:: https://badge.fury.io/py/b2tob3.png
+        :target: http://badge.fury.io/py/b2tob3
+.. image:: https://travis-ci.org/yaph/b2tob3.png?branch=master
+        :target: https://travis-ci.org/yaph/b2tob3
+
 Easier migration from Boostrap 2 to Boostrap 3
 ----------------------------------------------
 
