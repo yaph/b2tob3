@@ -36,6 +36,17 @@ regexes = [
 ]
 
 
+def make_replacements(content):
+    """Perform replacements in file content. Return changed content and the
+    number of replacements made."""
+
+    count_rep = 0
+    for regex in regexes:
+        (content, count) = re.subn(regex[0], regex[1], content)
+        count_rep += count
+    return (content, count_rep)
+
+
 def main():
     parser = OptionParser()
 
@@ -74,11 +85,7 @@ def main():
             with open(fname, 'r') as curr_file:
                 content = curr_file.read()
 
-            # perform replacements in file content
-            for regex in regexes:
-                (content, count) = re.subn(regex[0], regex[1], content)
-                count_file_subs += count
-
+            (content, count_file_subs) = make_replacements(content)
             if count_file_subs == 0:
                 continue
 
