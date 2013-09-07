@@ -12,12 +12,14 @@ Installation
 ------------
 
 ::
+
     pip install b2tob3
 
 Usage
 -----
 
 ::
+
     cd /project/html/
     b2tob3
 
