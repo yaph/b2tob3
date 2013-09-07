@@ -21,11 +21,6 @@ def git():
     local('git push')
 
 
-def test():
-    local('cp -R tests t')
-    local('python b2tob3/b2tob3.py -d t --verbose')
-
-
 def reinstall():
     local('pip uninstall b2tob3')
     local('python setup.py install')
