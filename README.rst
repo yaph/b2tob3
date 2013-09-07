@@ -16,9 +16,8 @@ Installation
 Usage
 -----
 
-::
-
     cd /project/html/
+
     b2tob3
 
 Follow these steps to avoid frustration:
