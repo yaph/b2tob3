@@ -4,9 +4,16 @@ b2tob3
 Easier migration from Boostrap 2 to Boostrap 3
 ----------------------------------------------
 
-This is a simple Python script that replaces certain strings in the files
-contained within the working directory and its subdirectories. It does not fully
-automate migration, you'll most likely need to perform manual fixes too.
+b2tob3 is a command line tool to help migrate Web projects from bootstrap 2
+to bootstrap 3 by performing a set of replacements that reflect bootstrap 3
+class name changes.
+
+By default b2tob3 searches all files in the current directory and its
+subdirectories. Use the comman line options to set the working and limit
+to a file extension.
+
+b2tob3 does not fully automate migration, but it takes away some of the tedious
+work. Still, you'll most likely need to perform manual fixes too.
 
 Installation
 ------------
