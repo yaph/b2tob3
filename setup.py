@@ -29,7 +29,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'b2tob3= b2tob3.b2tob3:main'
+            'b2tob3=b2tob3.b2tob3:main'
         ]
     }
 )
