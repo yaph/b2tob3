@@ -18,23 +18,35 @@ from optparse import OptionParser
 # CSS .btn .btn.something
 affix = r'(["\'\s\.])'
 
+# omitted classs: .brand .checkbox.inline .radio.inline
+
 regexes = [
     (re.compile(affix + r'span(\d+)' + affix), '\\1col-md-\\2\\3'),
     (re.compile(affix + r'offset(\d+)' + affix), '\\1col-md-offset-\\2\\3'),
     (re.compile(affix + r'icon-(\w+)' + affix), '\\1glyphicon glyphicon-\\2\\3'),
-    (re.compile(affix + r'hero\-unit' + affix), '\\1jumbotron\\2'),
+    (re.compile(affix + r'hero-unit' + affix), '\\1jumbotron\\2'),
 
     (re.compile(affix + r'(container|row)-fluid' + affix), '\\1\\2\\3'),
-    (re.compile(affix + r'nav\-(collapse|toggle)' + affix), '\\1navbar-\\2\\3'),
+    (re.compile(affix + r'nav-(collapse|toggle)' + affix), '\\1navbar-\\2\\3'),
 
     (re.compile(affix + r'(input|btn)-small' + affix), '\\1\\2-sm\\3'),
     (re.compile(affix + r'(input|btn)-large' + affix), '\\1\\2-lg\\3'),
 
     (re.compile(affix + r'btn-navbar' + affix), '\\1navbar-btn\\2'),
     (re.compile(affix + r'btn-mini' + affix), '\\1btn-xs\\2'),
-    (re.compile(affix + r'thumbnail' + affix), '\\1img-thumbnail\\2'),
     (re.compile(affix + r'unstyled' + affix), '\\1list-unstyled\\2'),
-    (re.compile(affix + r'inline' + affix), '\\1list-inline\\2')
+
+    (re.compile(affix + r'(visible|hidden)-phone' + affix), '\\1\\2-sm\\3'),
+    (re.compile(affix + r'(visible|hidden)-tablet' + affix), '\\1\\2-md\\3'),
+    (re.compile(affix + r'(visible|hidden)-desktop' + affix), '\\1\\2-lg\\3'),
+
+    (re.compile(affix + r'input-(prepend|append)' + affix), '\\1input-group\\3'),
+
+    # Should these regexes be more restriced because class names are more
+    # likely to occurr in other places?
+    (re.compile(affix + r'inline' + affix), '\\1list-inline\\2'),
+    (re.compile(affix + r'add-on' + affix), '\\1input-group-addon\\2'),
+    (re.compile(affix + r'thumbnail' + affix), '\\1img-thumbnail\\2'),
 ]
 
 extensions = ('.html', '.htm', '.css', '.js')

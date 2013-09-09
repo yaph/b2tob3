@@ -17,9 +17,9 @@ def release():
 
 
 def git():
+    local('nosetests')
     local('cp docs/index.rst README.rst')
     local('git add . && git commit -a')
-    local('git push')
 
 
 def reinstall():

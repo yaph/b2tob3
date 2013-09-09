@@ -13,9 +13,9 @@ b2tob3 is a command line tool to help migrate Web projects from bootstrap 2
 to bootstrap 3 by performing a set of replacements that reflect bootstrap 3
 class name changes.
 
-By default b2tob3 searches all files in the current directory and its
-subdirectories. Use the comman line options to set the working and limit
-to a file extension.
+b2tob3 searches all files ending in .html, .htm, .css or .js in the current
+directory and its subdirectories. You can specify the working directory with
+the ``d`` option like ``b2tob3 -d /path/to/dir``.
 
 b2tob3 does not fully automate migration, but it takes away some of the tedious
 work. Still, you'll most likely need to perform manual fixes too.
