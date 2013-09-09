@@ -14,26 +14,30 @@ from optparse import OptionParser
 # Does not include all changes from:
 # http://getbootstrap.com/getting-started/#migration
 
-class_decl = r'(class\s*=\s*["\'][\w\s]*)'
+# HTML class="btn" class='btn' class='something btn somethingelse'
+# CSS .btn .btn.something
+affix = r'(["\'\s\.])'
 
 regexes = [
-    (re.compile(class_decl + r'\bspan(\d+)\b'), '\\1col-md-\\2'),
-    (re.compile(class_decl + r'\boffset(\d+)\b'), '\\1col-md-offset-\\2'),
-    (re.compile(class_decl + r'\bicon-(\w+)\b'), '\\1glyphicon glyphicon-\\2'),
-    (re.compile(class_decl + r'\bhero\-unit\b'), '\\1jumbotron'),
+    (re.compile(affix + r'span(\d+)' + affix), '\\1col-md-\\2\\3'),
+    (re.compile(affix + r'offset(\d+)' + affix), '\\1col-md-offset-\\2\\3'),
+    (re.compile(affix + r'icon-(\w+)' + affix), '\\1glyphicon glyphicon-\\2\\3'),
+    (re.compile(affix + r'hero\-unit' + affix), '\\1jumbotron\\2'),
 
-    (re.compile(class_decl + r'\b(container|row)-fluid\b'), '\\1\\2'),
-    (re.compile(class_decl + r'\bnav\-(collapse|toggle)\b'), '\\1navbar-\\2'),
+    (re.compile(affix + r'(container|row)-fluid' + affix), '\\1\\2\\3'),
+    (re.compile(affix + r'nav\-(collapse|toggle)' + affix), '\\1navbar-\\2\\3'),
 
-    (re.compile(class_decl + r'\b(input|btn)-small\b'), '\\1\\2-sm'),
-    (re.compile(class_decl + r'\b(input|btn)-large\b'), '\\1\\2-lg'),
+    (re.compile(affix + r'(input|btn)-small' + affix), '\\1\\2-sm\\3'),
+    (re.compile(affix + r'(input|btn)-large' + affix), '\\1\\2-lg\\3'),
 
-    (re.compile(class_decl + r'\bbtn-navbar\b'), '\\1navbar-btn'),
-    (re.compile(class_decl + r'\bbtn-mini\b'), '\\1btn-xs'),
-    (re.compile(class_decl + r'\bthumbnail\b'), '\\1img-thumbnail'),
-    (re.compile(class_decl + r'\bunstyled\b'), '\\1list-unstyled'),
-    (re.compile(class_decl + r'\binline\b'), '\\1list-inline')
+    (re.compile(affix + r'btn-navbar' + affix), '\\1navbar-btn\\2'),
+    (re.compile(affix + r'btn-mini' + affix), '\\1btn-xs\\2'),
+    (re.compile(affix + r'thumbnail' + affix), '\\1img-thumbnail\\2'),
+    (re.compile(affix + r'unstyled' + affix), '\\1list-unstyled\\2'),
+    (re.compile(affix + r'inline' + affix), '\\1list-inline\\2')
 ]
+
+extensions = ('.html', '.htm', '.css', '.js')
 
 
 def make_replacements(content):
@@ -56,11 +60,6 @@ def main():
     )
 
     parser.add_option(
-        "-e", "--extension", dest="ext",
-        help="Extension of files to parse", metavar="EXT", default="html"
-    )
-
-    parser.add_option(
         '-v', '--verbose', action='store_true', dest='verbose',
         help='Be verbose and print names of changed files.'
     )
@@ -75,7 +74,7 @@ def main():
 
     for root, dirs, files in os.walk(pwd):
         for f in files:
-            if not f.endswith('.' + options.ext):
+            if not f.endswith(extensions):
                 continue
 
             count_files += 1
@@ -92,13 +91,13 @@ def main():
             with open(fname, 'w') as curr_file:
                 curr_file.write(content)
             if options.verbose:
-                print('File changed: %s' % fname)
+                print(('File changed: %s' % fname))
 
             count_subs += count_file_subs
             count_files_changed += 1
 
     tpl = 'Replacements:    %d\nFiles changed:   %d\nFiles processed: %d\n'
-    print(tpl % (count_subs, count_files_changed, count_files))
+    print((tpl % (count_subs, count_files_changed, count_files)))
 
 if __name__ == '__main__':
     main()

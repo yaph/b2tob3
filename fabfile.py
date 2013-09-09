@@ -23,5 +23,5 @@ def git():
 
 
 def reinstall():
-    local('pip uninstall b2tob3')
+    local('pip uninstall -y b2tob3')
     local('python setup.py install')
