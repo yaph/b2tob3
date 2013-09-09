@@ -9,31 +9,32 @@
 import os
 import re
 from optparse import OptionParser
+from bs4 import BeautifulSoup
 
 # List of regular expression replacements tuples to be executed in order.
 # Does not include all changes from:
 # http://getbootstrap.com/getting-started/#migration
 
-class_decl = r'(class\s*=\s*["\'][\w\s]*)'
-
 regexes = [
-    (re.compile(class_decl + r'\bspan(\d+)\b'), '\\1col-md-\\2'),
-    (re.compile(class_decl + r'\boffset(\d+)\b'), '\\1col-md-offset-\\2'),
-    (re.compile(class_decl + r'\bicon-(\w+)\b'), '\\1glyphicon glyphicon-\\2'),
-    (re.compile(class_decl + r'\bhero\-unit\b'), '\\1jumbotron'),
+    (re.compile(r'\bspan(\d+)\b'), 'col-md-\\1'),
+    (re.compile(r'\boffset(\d+)\b'), 'col-md-offset-\\1'),
+    (re.compile(r'\bicon-(\w+)\b'), 'glyphicon glyphicon-\\1'),
+    (re.compile(r'\bhero\-unit\b'), 'jumbotron'),
 
-    (re.compile(class_decl + r'\b(container|row)-fluid\b'), '\\1\\2'),
-    (re.compile(class_decl + r'\bnav\-(collapse|toggle)\b'), '\\1navbar-\\2'),
+    (re.compile(r'\b(container|row)-fluid\b'), '\\1'),
+    (re.compile(r'\bnav\-(collapse|toggle)\b'), 'navbar-\\1'),
 
-    (re.compile(class_decl + r'\b(input|btn)-small\b'), '\\1\\2-sm'),
-    (re.compile(class_decl + r'\b(input|btn)-large\b'), '\\1\\2-lg'),
+    (re.compile(r'\b(input|btn)-small\b'), '\\1-sm'),
+    (re.compile(r'\b(input|btn)-large\b'), '\\1-lg'),
 
-    (re.compile(class_decl + r'\bbtn-navbar\b'), '\\1navbar-btn'),
-    (re.compile(class_decl + r'\bbtn-mini\b'), '\\1btn-xs'),
-    (re.compile(class_decl + r'\bthumbnail\b'), '\\1img-thumbnail'),
-    (re.compile(class_decl + r'\bunstyled\b'), '\\1list-unstyled'),
-    (re.compile(class_decl + r'\binline\b'), '\\1list-inline')
+    (re.compile(r'\bbtn-navbar\b'), 'navbar-btn'),
+    (re.compile(r'\bbtn-mini\b'), 'btn-xs'),
+    (re.compile(r'\bthumbnail\b'), 'img-thumbnail'),
+    (re.compile(r'\bunstyled\b'), 'list-unstyled'),
+    (re.compile(r'\binline\b'), 'list-inline')
 ]
+
+extensions = ('.html', '.htm')
 
 
 def make_replacements(content):
@@ -47,17 +48,28 @@ def make_replacements(content):
     return (content, count_rep)
 
 
+def replace_soup(soup):
+    count_rep = 0
+
+    for regex in regexes:
+        matches = soup.find_all(class_=regex[0])
+        for match in matches:
+            classes = []
+            for cls in match['class']:
+                (cls, count) = re.subn(regex[0], regex[1], cls)
+                classes.append(cls)
+
+            match['class'] = ' '.join(classes)
+            count_rep += count
+    return count_rep
+
+
 def main():
     parser = OptionParser()
 
     parser.add_option(
         "-d", "--directory", dest="pwd",
         help="Directory to search", metavar="DIR", default=os.curdir
-    )
-
-    parser.add_option(
-        "-e", "--extension", dest="ext",
-        help="Extension of files to parse", metavar="EXT", default="html"
     )
 
     parser.add_option(
@@ -75,7 +87,7 @@ def main():
 
     for root, dirs, files in os.walk(pwd):
         for f in files:
-            if not f.endswith('.' + options.ext):
+            if not f.endswith(extensions):
                 continue
 
             count_files += 1
@@ -85,12 +97,14 @@ def main():
             with open(fname, 'r') as curr_file:
                 content = curr_file.read()
 
-            (content, count_file_subs) = make_replacements(content)
+            soup = BeautifulSoup(content)
+            count_file_subs = replace_soup(soup)
+
             if count_file_subs == 0:
                 continue
 
             with open(fname, 'w') as curr_file:
-                curr_file.write(content)
+                curr_file.write(str(soup))
             if options.verbose:
                 print('File changed: %s' % fname)
 

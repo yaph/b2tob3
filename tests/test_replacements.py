@@ -22,16 +22,8 @@ class B2tob3TestSuite(unittest.TestCase):
 
     def test_html_count(self):
         (content, count) = get_replacement('fluid.html')
-        self.assertEqual(count, 19)
+        self.assertEqual(count, 30)
 
     def test_html_match(self):
         (content, count) = get_replacement('fluid.html')
-        self.assertRegexpMatches(content, 'col-md-3')
-
-    def test_txt_count(self):
-        (content, count) = get_replacement('b2tob3.txt')
-        self.assertEqual(count, 12)
-
-    def test_txt_match(self):
-        (content, count) = get_replacement('b2tob3.txt')
         self.assertRegexpMatches(content, 'col-md-3')
